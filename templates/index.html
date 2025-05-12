@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Demerit points calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="/" class="nav-link">Home</a>
+    </nav>
+
+    <main>
+        <h1>Demerits points calculator</h1>
+        
+        <form method="POST" id="demeritForm">
+            <div class="form-group">
+                <label for="driving_speed">Driving speed</label>
+                <input type="number" step="0.1" id="driving_speed" name="driving_speed" value="{{ request.form.driving_speed }}">
+            </div>
+
+            <div class="form-group">
+                <label for="speed_limit">Speed limit</label>
+                <input type="number" id="speed_limit" name="speed_limit" value="{{ request.form.speed_limit }}">
+            </div>
+
+            <div class="form-group checkbox">
+                <label>
+                    <input type="checkbox" name="holiday_period" {% if request.form.holiday_period %}checked{% endif %}>
+                    Holiday period
+                </label>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn primary">Calculate points</button>
+                <button type="button" class="btn secondary" onclick="resetForm()">Reset</button>
+            </div>
+        </form>
+
+        {% if result and result.error %}
+        <div class="alert warning">
+            {{ result.error }}
+            <button class="close" onclick="this.parentElement.style.display='none'">&times;</button>
+        </div>
+        {% endif %}
+
+        {% if result and result.message %}
+        <div class="alert {% if result.points > 0 %}danger{% else %}success{% endif %}">
+            {{ result.message }}
+        </div>
+        {% endif %}
+
+        {% if result and result.info %}
+        <div class="alert success">
+            {{ result.info }}
+        </div>
+        {% endif %}
+    </main>
+
+    <script>
+        function resetForm() {
+            document.getElementById('demeritForm').reset();
+            // Remove any alert messages
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => alert.style.display = 'none');
+        }
+    </script>
+</body>
+</html>
