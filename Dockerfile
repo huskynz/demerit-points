@@ -17,7 +17,7 @@ COPY . .
 EXPOSE 5000
 
 # Set environment variable for Flask
-ENV FLASK_APP=flask_app.py
+ENV FLASK_APP=app.py
 
 # Run the application
 CMD ["flask", "run", "--host=0.0.0.0"]
