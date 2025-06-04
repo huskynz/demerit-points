@@ -20,8 +20,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY . .
 
-# Expose the port your app runs on
-EXPOSE 5000
-
 # Run with Gunicorn (adjust app:app to your actual module/app name)
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:4321", "app:app"]
